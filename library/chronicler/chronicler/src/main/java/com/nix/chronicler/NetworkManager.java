@@ -64,7 +64,7 @@ class NetworkManager {
             throw new IllegalStateException("Not idle.");
         }
 
-        final String json = jsonCreator.toJson(events);
+        final String json = jsonCreator.toJson(events).toString();
 
         try {
             URL url = new URL(LoggerFactory.getServerUrl());

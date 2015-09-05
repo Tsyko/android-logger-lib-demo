@@ -26,6 +26,7 @@ class InMemoryEventStorage implements EventStorage {
 
     @Override
     public void addLast(final Event event) {
+        Log.d("ZZZ", "InMemoryEventStorage.addLast() " + event);
         list.addLast(event);
     }
 

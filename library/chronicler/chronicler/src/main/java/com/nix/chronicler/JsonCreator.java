@@ -7,11 +7,18 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
- * Created by andriy on 05 September 2015.
+ * Converts events to json.
  */
 class JsonCreator {
 
-    String toJson(List<Event> events) { // TODO: test
+    private static final String TYPE = "type";
+    private static final String MESSAGE = "message";
+    private static final String LATITUDE = "latitude";
+    private static final String LONGITUDE = "longitude";
+    private static final String TIME = "time";
+    static final String EVENTS = "events";
+
+    JSONObject toJson(List<Event> events) {
         final JSONObject json = new JSONObject();
 
         JSONArray array = new JSONArray();
@@ -21,22 +28,31 @@ class JsonCreator {
         }
 
         try {
-            json.put("events", array);
-            return json.toString();
+            json.put(EVENTS, array);
+            return json;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
 
-    JSONObject toJson(Event event) { // TODO: test
+    JSONObject toJson(Event event) {
         JSONObject object = new JSONObject();
         try {
-            object.put("type", event.getType());
-            object.put("message", event.getMessage());
-            object.put("latitude", event.getLatitude());
-            object.put("longitude", event.getLatitude());
-            object.put("time", event.getTime());
+            object.put(TYPE, event.getType());
+            object.put(MESSAGE, event.getMessage());
+            object.put(LATITUDE, event.getLatitude());
+            object.put(LONGITUDE, event.getLongitude());
+            object.put(TIME, event.getTime());
             return object;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    Event fromJson(JSONObject json) {
+        try {
+            return new Event(json.getInt(TYPE), json.getString(MESSAGE), json.getDouble(LATITUDE),
+                    json.getDouble(LONGITUDE), json.getLong(TIME));
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
