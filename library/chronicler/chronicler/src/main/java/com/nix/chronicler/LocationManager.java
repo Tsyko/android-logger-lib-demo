@@ -9,10 +9,9 @@ import com.google.android.gms.location.LocationServices;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 
 /**
- * Created by andriy on 04 September 2015.
+ * Location manager.
  */
 class LocationManager implements GoogleApiClient.ConnectionCallbacks, LocationListener {
 
@@ -25,7 +24,6 @@ class LocationManager implements GoogleApiClient.ConnectionCallbacks, LocationLi
                 .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(final ConnectionResult connectionResult) {
-                        Log.d("ZZZ", "LocationManager.onConnectionFailed() 1");
                     }
                 })
                 .addApi(LocationServices.API)
@@ -42,7 +40,6 @@ class LocationManager implements GoogleApiClient.ConnectionCallbacks, LocationLi
     }
 
     private synchronized void setLocation(Location location) {
-        Log.d("ZZZ", "LocationManager.setLocation() " + location);
         this.location = location;
     }
 
@@ -52,7 +49,6 @@ class LocationManager implements GoogleApiClient.ConnectionCallbacks, LocationLi
 
     @Override
     public void onConnected(final Bundle bundle) {
-        Log.d("ZZZ", "LocationManager.onConnected() ");
         setLocation(LocationServices.FusedLocationApi.getLastLocation(client));
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 client, buildLocationRequest(), this);
@@ -60,12 +56,10 @@ class LocationManager implements GoogleApiClient.ConnectionCallbacks, LocationLi
 
     @Override
     public void onConnectionSuspended(final int i) {
-        Log.d("ZZZ", "LocationManager.onConnectionSuspended() ");
     }
 
     @Override
     public void onLocationChanged(final Location location) {
-        Log.d("ZZZ", "LocationManager.onLocationChanged() ");
         setLocation(location);
     }
 }
