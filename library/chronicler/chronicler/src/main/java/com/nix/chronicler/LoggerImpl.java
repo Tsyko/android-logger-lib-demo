@@ -21,7 +21,8 @@ class LoggerImpl implements Logger {
         Log.d("ZZZ", "LoggerImpl.log() " + type + " " + comment);
 
         final Intent intent = new Intent(context, LoggerService.class);
-        // TODO: add params
+        intent.putExtra(LoggerService.EXTRA_TYPE, type);
+        intent.putExtra(LoggerService.EXTRA_COMMENT, comment);
         context.startService(intent);
     }
 }
