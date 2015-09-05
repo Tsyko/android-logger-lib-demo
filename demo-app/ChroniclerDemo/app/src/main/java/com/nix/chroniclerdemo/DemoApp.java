@@ -15,7 +15,7 @@ public class DemoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LoggerFactory.init(this);
+        LoggerFactory.init(BuildConfig.SERVER_URL, this);
         generator = new RandomEventGenerator();
     }
 }

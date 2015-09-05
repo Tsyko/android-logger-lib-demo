@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by andriy on 04 September 2015.
  */
-public class LoggerService extends Service {
+public class LoggerService extends Service implements NetworkManager.Listener {
 
     private static final long NETWORK_DELAY = TimeUnit.SECONDS.toMillis(10);
     private static final long RECONNECT_TIMEOUT = TimeUnit.MINUTES.toMillis(15);
@@ -38,7 +38,7 @@ public class LoggerService extends Service {
         super.onCreate();
         Log.d("ZZZ", "LoggerService.onCreate() ");
         locationManager = new LocationManager(this);
-        networkManager = new NetworkManager(this);
+        networkManager = new NetworkManager(this, this);
         eventStorage = new InMemoryEventStorage();
         // TODO: create looper
     }
@@ -84,9 +84,21 @@ public class LoggerService extends Service {
 
             List<Event> events = eventStorage.removeAll();
             networkManager.send(events);
+        }
+    }
 
-            // TODO: on success - null sentEvent
-            // TODO: on error - move sendEvents to top of storage
+    @Override
+    public void onSendSuccess(final List<Event> events) {
+        Log.d("ZZZ", "LoggerService.onSendSuccess() ");
+    }
+
+    @Override
+    public void onSendFailure(final List<Event> events) {
+        Log.d("ZZZ", "LoggerService.onSendFailure() ");
+        synchronized (mutex) {
+            for (int i = events.size() - 1; i >= 0; i--) {
+                eventStorage.addFirst(events.get(i));
+            }
         }
     }
 

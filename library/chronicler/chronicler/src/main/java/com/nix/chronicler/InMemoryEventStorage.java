@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by andriy on 05 September 2015.
+ * In-memory implementation of event storage.
  */
 class InMemoryEventStorage implements EventStorage {
 
@@ -17,6 +17,11 @@ class InMemoryEventStorage implements EventStorage {
     @Override
     public boolean isEmpty() {
         return list.isEmpty();
+    }
+
+    @Override
+    public void addFirst(final Event event) {
+        list.addFirst(event);
     }
 
     @Override

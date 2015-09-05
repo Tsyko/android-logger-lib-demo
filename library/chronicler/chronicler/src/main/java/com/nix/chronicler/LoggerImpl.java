@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
- * Created by andriy on 03 September 2015.
+ * Implementation of logger interface. Processes events asynchronously.
  */
 class LoggerImpl implements Logger {
 

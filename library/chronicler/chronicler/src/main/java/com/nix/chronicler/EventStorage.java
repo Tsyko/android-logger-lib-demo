@@ -3,11 +3,12 @@ package com.nix.chronicler;
 import java.util.List;
 
 /**
- * Created by andriy on 05 September 2015.
+ * Interface for event storage.
  */
 interface EventStorage {
 
     boolean isEmpty();
+    void addFirst(Event event);
     void addLast(Event event);
     List<Event> removeAll();
 }

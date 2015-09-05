@@ -3,20 +3,29 @@ package com.nix.chronicler;
 import android.content.Context;
 
 /**
- * Created by andriy on 03 September 2015.
+ * Factory class for configuring and obtaining logger.
  */
-public class LoggerFactory {
+public final class LoggerFactory {
 
     private static Logger logger;
 
+    private static String serverUrl;
+
     private LoggerFactory() {
+        // this class is not intended for instantiation
     }
 
-    public static synchronized void init(final Context context) {
+    /**
+     * Initiates the factory.
+     * @param serverUrl url to send logs to
+     * @param context android context
+     */
+    public static synchronized void init(final String serverUrl, final Context context) {
         if (logger != null) {
             throw new IllegalStateException("Already inited.");
         }
 
+        LoggerFactory.serverUrl = serverUrl;
         logger = new LoggerImpl(context);
     }
 
@@ -26,5 +35,13 @@ public class LoggerFactory {
         }
 
         return logger;
+    }
+
+    /**
+     * Returns logger. You must call {@link #init(String, Context)} prior to calling this method.
+     * @return logger
+     */
+    static String getServerUrl() {
+        return serverUrl;
     }
 }

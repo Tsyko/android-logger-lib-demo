@@ -3,7 +3,7 @@ package com.nix.chronicler;
 import android.location.Location;
 
 /**
- * Created by andriy on 05 September 2015.
+ * Immutable model of event.
  */
 class Event {
 
