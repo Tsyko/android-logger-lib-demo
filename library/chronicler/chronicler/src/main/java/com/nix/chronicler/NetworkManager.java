@@ -69,6 +69,7 @@ class NetworkManager {
         try {
             URL url = new URL(LoggerFactory.getServerUrl());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             connection.setReadTimeout(10000);
             connection.setConnectTimeout(15000);
             connection.setRequestMethod("POST");
@@ -85,6 +86,7 @@ class NetworkManager {
                 listener.onSendFailure(events);
             }
         } catch (IOException e) {
+            Log.e("ZZZ", "NetworkManager.send() ", e);
             listener.onSendFailure(events);
         } finally {
             events = null;
