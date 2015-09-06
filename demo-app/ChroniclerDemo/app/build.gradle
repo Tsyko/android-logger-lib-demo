@@ -11,7 +11,8 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "SERVER_URL", "\"http://riaa.com/\""
+        buildConfigField "String", "SERVER_URL", "\"http://192.168.0.59:5000\""
+//        buildConfigField "String", "SERVER_URL", "\"http://riaa.com/\""
 //        buildConfigField "String", "SERVER_URL", "\"http://www.mpaa.org/\""
     }
     buildTypes {
@@ -25,5 +26,7 @@ android {
 dependencies {
 //    compile fileTree(dir: 'libs', include: ['*.jar']) // TODO: remove
 //    compile 'com.android.support:appcompat-v7:22.2.1' // TODO: remove
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.jakewharton:butterknife:6.1.+'
     compile project(':chronicler')
 }

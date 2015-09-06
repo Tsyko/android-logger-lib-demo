@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by andriy on 04 September 2015.
+ * Generates random events.
  */
 class RandomEventGenerator {
 
@@ -21,8 +21,6 @@ class RandomEventGenerator {
     private final Random random = new Random();
 
     RandomEventGenerator() {
-        handler.postDelayed(new EventProducerRunnable(),
-                TimeUnit.SECONDS.toMillis(random.nextInt(MAX_INTERVAL)));
     }
 
     private void fireRandomEvents() {
@@ -40,5 +38,14 @@ class RandomEventGenerator {
             handler.postDelayed(new EventProducerRunnable(),
                     TimeUnit.SECONDS.toMillis(random.nextInt(MAX_INTERVAL)));
         }
+    }
+
+    void start() {
+        handler.postDelayed(new EventProducerRunnable(),
+                TimeUnit.SECONDS.toMillis(random.nextInt(MAX_INTERVAL)));
+    }
+
+    void stop() {
+        handler.removeCallbacksAndMessages(null);
     }
 }
