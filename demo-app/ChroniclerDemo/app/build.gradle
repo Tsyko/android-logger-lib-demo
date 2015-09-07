@@ -22,8 +22,6 @@ android {
 }
 
 dependencies {
-//    compile fileTree(dir: 'libs', include: ['*.jar']) // TODO: remove
-//    compile 'com.android.support:appcompat-v7:22.2.1' // TODO: remove
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton:butterknife:6.1.+'
     compile project(':chronicler')
