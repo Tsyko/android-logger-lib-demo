@@ -1,7 +1,5 @@
 package com.nix.chronicler;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -26,7 +24,6 @@ class InMemoryEventStorage implements EventStorage {
 
     @Override
     public void addLast(final Event event) {
-        Log.d("ZZZ", "InMemoryEventStorage.addLast() " + event);
         list.addLast(event);
     }
 

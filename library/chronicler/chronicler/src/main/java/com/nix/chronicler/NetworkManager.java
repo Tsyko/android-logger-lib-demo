@@ -3,7 +3,6 @@ package com.nix.chronicler;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,7 +12,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 /**
- * Created by andriy on 05 September 2015.
+ * Performs the networking.
  */
 class NetworkManager {
 
@@ -44,9 +43,6 @@ class NetworkManager {
         }
 
         this.events = events;
-        Log.d("ZZZ", "NetworkManager.send() got " + events.size() + " events to send");
-
-
 
         new Thread(new Runnable() {
             @Override
@@ -54,9 +50,6 @@ class NetworkManager {
                 send();
             }
         }, "NetworkManagerThread").start();
-
-        // TODO: send
-
     }
 
     private void send() {
@@ -78,7 +71,6 @@ class NetworkManager {
 
             connection.connect();
             int responseCode = connection.getResponseCode();
-            Log.d("ZZZ", "NetworkManager.send() " + responseCode);
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 listener.onSendSuccess(events);
@@ -86,7 +78,6 @@ class NetworkManager {
                 listener.onSendFailure(events);
             }
         } catch (IOException e) {
-            Log.e("ZZZ", "NetworkManager.send() ", e);
             listener.onSendFailure(events);
         } finally {
             events = null;

@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by andriy on 04 September 2015.
+ * Service which processes incoming events.
  */
 public class LoggerService extends Service implements NetworkManager.Listener {
 
@@ -36,11 +35,9 @@ public class LoggerService extends Service implements NetworkManager.Listener {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("ZZZ", "LoggerService.onCreate() ");
         locationManager = new LocationManager(this);
         networkManager = new NetworkManager(this, this);
         eventStorage = new InMemoryEventStorage();
-        // TODO: create looper
     }
 
     @Override
@@ -54,7 +51,6 @@ public class LoggerService extends Service implements NetworkManager.Listener {
         }
 
         if (!handler.hasMessages(MESSAGE_SEND_EVENTS)) {
-            Log.d("ZZZ", "LoggerService.onStartCommand() sending message to handler...");
             handler.sendEmptyMessageDelayed(MESSAGE_SEND_EVENTS, NETWORK_DELAY);
         }
 
@@ -67,14 +63,10 @@ public class LoggerService extends Service implements NetworkManager.Listener {
     }
 
     private void sendEvents() {
-        Log.d("ZZZ", "LoggerService.sendEvents() ");
-
         synchronized (mutex) {
             if (!networkManager.isIdle() || eventStorage.isEmpty()) {
                 return;
             }
-
-            Log.d("ZZZ", "LoggerService.sendEvents() >>");
 
             if (!networkManager.isOnline() && !handler.hasMessages(MESSAGE_SEND_EVENTS)) {
                 // try again later
@@ -89,12 +81,10 @@ public class LoggerService extends Service implements NetworkManager.Listener {
 
     @Override
     public void onSendSuccess(final List<Event> events) {
-        Log.d("ZZZ", "LoggerService.onSendSuccess() ");
     }
 
     @Override
     public void onSendFailure(final List<Event> events) {
-        Log.d("ZZZ", "LoggerService.onSendFailure() ");
         synchronized (mutex) {
             for (int i = events.size() - 1; i >= 0; i--) {
                 eventStorage.addFirst(events.get(i));
@@ -113,8 +103,6 @@ public class LoggerService extends Service implements NetworkManager.Listener {
         @Override
         public void handleMessage(final Message msg) {
             final LoggerService service = reference.get();
-
-            Log.d("ZZZ", "ServiceHandler.handleMessage() service: " + service);
 
             if (service != null && msg.what == MESSAGE_SEND_EVENTS) {
                 service.sendEvents();
