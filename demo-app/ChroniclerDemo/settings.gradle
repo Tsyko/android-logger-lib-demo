@@ -1,0 +1,2 @@
+include ':app', ':chronicler'
+project(':chronicler').projectDir = new File(settingsDir, '../../library/chronicler/chronicler')
