@@ -5,7 +5,6 @@ package com.nix.chroniclerdemo;
  */
 public interface EventType {
 
-    int RANDOM = 0;
     int SCREEN_OPENED = 1;
     int SCREEN_CLOSED = 2;
 }

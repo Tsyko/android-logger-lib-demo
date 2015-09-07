@@ -7,9 +7,6 @@ import android.app.Activity;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-/**
- * Created by andriy on 05 September 2015.
- */
 abstract class AbstractDemoActivity extends Activity {
 
     protected static Uri buildImageUri(final long imageId) {
